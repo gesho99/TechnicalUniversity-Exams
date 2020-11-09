@@ -1,2 +1,2 @@
 # TechnicalUniversity-Exams
-#Faculty of Applied Mathematics, Informatics and Software Sciences
+# Faculty of Applied Mathematics, Informatics and Software Sciences
