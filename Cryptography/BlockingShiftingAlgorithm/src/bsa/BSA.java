@@ -1,8 +1,10 @@
 package bsa;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class BSA {
 	
@@ -21,17 +23,25 @@ public class BSA {
 		String encryptedBlock = "";
 		int counter = 0;
 		
+		//Проверява дали размерът на съобщението е кратен на размера на ключа
 		if(message.length() % key.length() == 0) {
 			for(int i = 1; i <= message.length() / key.length(); i++) {
-				blockedMessage.add(message.substring(counter, counter+5));
-				counter += 5;
+				blockedMessage.add(message.substring(counter, counter+key.length()));
+				counter += key.length();
 			}
 		}
+		//Ако не е кратен ще трябва да се допълни до размера на ключа
 		else {
-			
+			for(int i = 1; i <= message.length() % key.length(); i++) {
+				message = message.concat("9");
+			}
+			for(int i = 1; i <= message.length() / key.length(); i++) {
+				blockedMessage.add(message.substring(counter, counter+key.length()));
+				counter += key.length();
+			}
 		}
 		
-		
+		//Всеки блок от съобщението (всеки блок = дължината на ключа) се сплитва и на всяка буква от сплитнатия блок се променя позицията спрямо цифрата в ключа
 		for(String block : blockedMessage) {
 			counter = 0;
 			List<String> splittedBlock = Arrays.asList(block.split(""));
