@@ -8,16 +8,23 @@ import java.util.Random;
 
 public class BSA {
 	
-	static String[] letters = new String[] {"А", "Б", "В", "Г", "Д", 
+	static List<String> letters = new ArrayList<String>(List.of("А", "Б", "В", "Г", "Д", 
 			"Е", "Ж", "З", "И", "Й",
 			"К", "Л", "М", "Н", "О", 
 			"П", "Р", "С", "Т", "У", 
 			"Ф", "Х", "Ц", "Ч", "Ш", 
 			"Щ", "Ъ", "Ь", "Ю", "Я", 
 			" ", "1", "2", "3", "4", 
-			"5", "6", "7", "8", "9" };
+			"5", "6", "7", "8", "9"));
 	
 	public static List<String> encrypt(String message, String key) {
+		
+		for(String letter : message.split("")) {
+			if(!letters.contains(letter)) {
+				System.out.println("Съобщението съдържа непозволени символи.");
+				return new ArrayList<String>();
+			}
+		}
 		
 		List<String> blockedMessage = new ArrayList<String>(), encryptedBlockedMessage = new ArrayList<String>();
 		String encryptedBlock = "";
@@ -39,6 +46,7 @@ public class BSA {
 				blockedMessage.add(message.substring(counter, counter+key.length()));
 				counter += key.length();
 			}
+			System.out.println("Дължината на съобщението не е кратна на ключа. Съобщението след изравняване: " + message);
 		}
 		
 		//Всеки блок от съобщението (всеки блок = дължината на ключа) се сплитва и на всяка буква от сплитнатия блок се променя позицията спрямо цифрата в ключа
@@ -56,7 +64,6 @@ public class BSA {
 			encryptedBlockedMessage.add(encryptedBlock);
 			encryptedBlock = "";
 		}
-		
 		return encryptedBlockedMessage;
 	}
 }
